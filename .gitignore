@@ -31,4 +31,5 @@ local.properties
 ## Playgrounds
 timeline.xctimeline
 playground.xcworkspace
+*.xcplayground
 
