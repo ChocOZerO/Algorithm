@@ -27,3 +27,8 @@ local.properties
 *.zip
 *.tar.gz
 *.rar
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
