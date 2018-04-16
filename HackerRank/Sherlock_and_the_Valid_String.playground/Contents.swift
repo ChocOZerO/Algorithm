@@ -25,23 +25,10 @@ func isValid(input: String) -> Bool {
             }
         }
     }
-    if differentCount > 1 {
-        return false
-    } else if differentCount == 1 {
-        var keys = [Int]()
-        for key in sameCounts.keys {
-            keys.append(key)
-        }
-        keys.sort(by: <)
-        if keys.contains(1), sameCounts[1]! == 1 { return true }
-        if keys[1] == keys[0] + 1, sameCounts[keys[1]]! == 1 { return true }
-        return false
-    } else {
-        return true
-    }
+    return validate(differentCount: differentCount, sameCounts: sameCounts)
 }
 
-func getCharacterCounter(input: String) -> [Character: Int] {
+private func getCharacterCounter(input: String) -> [Character: Int] {
     var characterCounter: [Character: Int] = [:]
     for character in input {
         if characterCounter[character] == nil {
@@ -53,7 +40,7 @@ func getCharacterCounter(input: String) -> [Character: Int] {
     return characterCounter
 }
 
-func getCounts(from characterCounter: [Character: Int]) -> [Int] {
+private func getCounts(from characterCounter: [Character: Int]) -> [Int] {
     var counts = [Int]()
     for character in characterCounter.keys {
         counts.append(characterCounter[character]!)
@@ -62,8 +49,29 @@ func getCounts(from characterCounter: [Character: Int]) -> [Int] {
     return counts
 }
 
-let tester = "aassdddd"
-let validation = isValid(input: tester)
+private func validate(differentCount: Int, sameCounts: [Int: Int]) -> Bool {
+    if differentCount > 1 {
+        return false
+    } else if differentCount == 1 {
+        let keys = getKeys(from: sameCounts)
+        if keys.contains(1), sameCounts[1]! == 1 { return true }
+        if keys[1] == keys[0] + 1, sameCounts[keys[1]]! == 1 { return true }
+        return false
+    } else {
+        return true
+    }
+}
+
+private func getKeys(from sameCounts: [Int: Int]) -> [Int] {
+    var keys = [Int]()
+    for key in sameCounts.keys {
+        keys.append(key)
+    }
+    keys.sort(by: <)
+    return keys
+}
+
+let validation = isValid(input: readLine() ?? "")
 if validation {
     print("YES")
 } else {
